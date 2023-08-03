@@ -1,7 +1,7 @@
-import React from "react";
-import Link from "next/link";
-import styles from "./Navbar.module.scss";
-import ThemeSwitch from "../ui-ux/ThemeSwitch";
+import React from 'react';
+import Link from 'next/link';
+import styles from './Navbar.module.scss';
+import ThemeSwitch from '../ui-ux/ThemeSwitch';
 
 interface Props {
   className: string;
@@ -35,7 +35,7 @@ const Navbar = ({ className }: Props) => {
             <li>
               <Link href="/">Home</Link>
             </li>
-            {/* <li>
+            <li>
               <Link href="/daisyui">DaisyUI</Link>
             </li>
             <li>
@@ -45,8 +45,8 @@ const Navbar = ({ className }: Props) => {
               <Link href="/user-list">Client List</Link>
             </li>
             <li>
-              <Link href="/blog">Blog</Link> */}
-            {/* </li> */}
+              <Link href="/blog">Blog</Link>
+            </li>
           </ul>
         </div>
         <Link href="/" className="btn btn-ghost normal-case text-xl">
@@ -58,18 +58,12 @@ const Navbar = ({ className }: Props) => {
           <li>
             <Link href="/">Home</Link>
           </li>
-          {/* <li>
-            <Link href="/daisyui">DaisyUI Demo</Link>
+          <li>
+            <Link href="/dashboard">Dashboard</Link>
           </li>
           <li>
-            <Link href="/template">Page Template</Link>
+            <Link href="/template">Template</Link>
           </li>
-          <li>
-            <Link href="/user-list">Client List</Link>
-          </li>
-          <li>
-            <Link href="/blog">Blog</Link>
-          </li> */}
         </ul>
       </div>
       <div className="navbar-end">
