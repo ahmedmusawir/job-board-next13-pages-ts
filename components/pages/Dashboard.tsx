@@ -24,7 +24,7 @@ const DashboardContent = () => {
   return (
     <Container className={'flex mx-auto border-2 border-blue-400'} FULL={false}>
       {/* SIDEBAR - LEFT BLOCK */}
-      <Box className="min-w-[40%]">
+      <Box className="min-w-[30%]">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6">
           <div className="flex h-16 shrink-0 items-center">
             <img
@@ -37,7 +37,7 @@ const DashboardContent = () => {
         </div>
       </Box>
       {/* JOB LIST - RIGHT BLOCK */}
-      <Box className="min-w-[60%]">
+      <Box className="min-w-[70%]">
         <Row className="bg-gray-200">
           <h2 className="text-lg font-bold mb-5">Current Jobs</h2>
           <JobList jobs={jobs} />

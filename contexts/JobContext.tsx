@@ -1,4 +1,5 @@
 import { Job, JobData } from '@/entities';
+import { useEffectAfterFirstRender } from '@/utils';
 import React, {
   createContext,
   useState,
@@ -7,14 +8,26 @@ import React, {
   ReactNode,
 } from 'react';
 
-// Define the shape of the context
-interface JobContextProps {
-  jobs: Job[];
-  // searchJobs: (apiUrl: string, formsStates: any) => void;
-  // ... add more properties as needed
+interface SidebarFormState {
+  jobTypes: string[];
+  experienceLevels: string[];
+  remoteOkOnly: boolean;
+  featuredJobsOnly: boolean;
+  baseSalaryOptions: number[];
+  baseSalaryBounds: number[];
+  selectedTags: string[];
 }
 
-// Create the context
+// Defining the shape of the context
+interface JobContextProps {
+  jobs: Job[];
+  sideBarFormState: SidebarFormState;
+  searchFormState: string;
+  setSideBarFormState: React.Dispatch<React.SetStateAction<SidebarFormState>>;
+  setSearchFormState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+// Creating the context
 const JobContext = createContext<JobContextProps | undefined>(undefined);
 
 export const JobProvider = ({
@@ -24,17 +37,59 @@ export const JobProvider = ({
   children: ReactNode;
   jobs: Job[];
 }) => {
+  // MAIN JOBS TO DISPLAY
   const [displayedJobs, setDisplayedJobs] = useState(jobs);
-  //... other state variables
+
+  // ALL STATES FROM SIDEBAR
+  const [sideBarFormState, setSideBarFormState] = useState<SidebarFormState>({
+    jobTypes: [],
+    experienceLevels: [],
+    remoteOkOnly: false,
+    featuredJobsOnly: false,
+    baseSalaryOptions: [],
+    baseSalaryBounds: [],
+    selectedTags: [],
+  });
+
+  // SEARCHBAR TEXT STATE
+  const [searchFormState, setSearchFormState] = useState('');
 
   const searchJobs = async (apiUrl: string, formsStates: any) => {
     //... the searchJobs function
   };
 
   //... useEffect calls
+  // trigger a search whenever the sidebar form state changes
+  useEffectAfterFirstRender(() => {
+    console.log(
+      'sidebar state form changed => sideBarFormState',
+      sideBarFormState
+    );
+    // const formsStates = { searchFormState, sideBarFormState };
+    // searchJobs('api/search-jobs', formsStates);
+  }, [sideBarFormState]);
+
+  // trigger a search whenever the search form state changes && length >= 3 -OR- length == 0 (implying a reset)
+  // useEffectAfterFirstRender(() => {
+  //   console.log(
+  //     'search form changed && length >= 3 OR ==0 => triggering a search'
+  //   );
+  //   if (searchFormState.length >= 3 || searchFormState.length == 0) {
+  //     // const formsStates = { searchFormState, sideBarFormState };
+  //     // searchJobs('api/search-jobs', formsStates);
+  //   }
+  // }, [searchFormState]);
 
   return (
-    <JobContext.Provider value={{ jobs: displayedJobs }}>
+    <JobContext.Provider
+      value={{
+        jobs: displayedJobs,
+        sideBarFormState,
+        setSideBarFormState,
+        searchFormState,
+        setSearchFormState,
+      }}
+    >
       {children}
     </JobContext.Provider>
   );

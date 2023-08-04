@@ -1,6 +1,5 @@
 import { Job, JobData } from '@/entities';
 import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
-// import db from '../../data/jobs.json';
 
 const JobList = ({ jobs }: JobData) => {
   return (
