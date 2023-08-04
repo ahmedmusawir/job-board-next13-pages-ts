@@ -1,7 +1,14 @@
+type JobSearchQuery = {
+  remoteOk?: boolean;
+  featured?: boolean;
+  jobTypes?: string[];
+};
+
 export interface JobDataSource {
   getJobs: () => Promise<ApiResponseJobs>;
   getJobSlugs: () => Promise<ApiResponseJobSlugs>;
   getJobBySlug: (slug: string) => Promise<JobData>;
+  searchJobs: (query: JobSearchQuery) => Promise<ApiResponseJobs>;
 }
 
 export interface Job {

@@ -15,7 +15,6 @@ const SidebarForm = () => {
         Job Types
       </div>
       <CheckboxGroupJobTypes />
-      {/* <CheckboxGroup /> */}
     </div>
   );
 };

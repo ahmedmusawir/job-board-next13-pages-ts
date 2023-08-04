@@ -11,8 +11,8 @@ import React, {
 interface SidebarFormState {
   jobTypes: string[];
   experienceLevels: string[];
-  remoteOkOnly: boolean;
-  featuredJobsOnly: boolean;
+  remoteOk: boolean;
+  featured: boolean;
   baseSalaryOptions: number[];
   baseSalaryBounds: number[];
   selectedTags: string[];
@@ -44,8 +44,8 @@ export const JobProvider = ({
   const [sideBarFormState, setSideBarFormState] = useState<SidebarFormState>({
     jobTypes: [],
     experienceLevels: [],
-    remoteOkOnly: false,
-    featuredJobsOnly: false,
+    remoteOk: false,
+    featured: false,
     baseSalaryOptions: [],
     baseSalaryBounds: [],
     selectedTags: [],

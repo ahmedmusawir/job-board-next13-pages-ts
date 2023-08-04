@@ -17,6 +17,12 @@ const JobList = ({ jobs }: JobData) => {
               <h5 className="inline-flex flex-shrink-0 items-center rounded-full bg-green-50 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 mb-5">
                 {job.attributes.jobType}
               </h5>
+              <h5 className="inline-flex flex-shrink-0 items-center rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 mb-5">
+                {job.attributes.featured ? 'Featured' : null}
+              </h5>
+              <h5 className="inline-flex flex-shrink-0 items-center rounded-full bg-orange-100 px-1.5 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 mb-5">
+                {job.attributes.remoteOk ? 'Remote' : null}
+              </h5>
               <div className="flex items-center space-x-3">
                 <h3 className="truncate text-sm font-medium text-gray-900">
                   {job.attributes.company.data.attributes.name}

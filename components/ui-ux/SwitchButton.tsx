@@ -23,7 +23,7 @@ const SwitchButton = ({ labelText, filter }: SwitchProps) => {
       case 'remoteOk':
         console.log('Remote Switch Checked:', checked);
         setSideBarFormState((prevState) => {
-          return { ...prevState, remoteOkOnly: checked };
+          return { ...prevState, remoteOk: checked };
         });
         break;
 
@@ -32,7 +32,7 @@ const SwitchButton = ({ labelText, filter }: SwitchProps) => {
         setSideBarFormState((prevState) => {
           return {
             ...prevState,
-            featuredJobsOnly: !prevState.featuredJobsOnly,
+            featured: !prevState.featured,
           };
         });
         break;

@@ -41,3 +41,39 @@ export const getJobBySlug = async (slug: string): Promise<JobData> => {
 
   return rawCompany;
 };
+
+
+// SEARCH JOBS TS
+
+type StrapiQuery = {
+  populate: string[];
+  filters: { [key: string]: any };
+};
+
+type JobSearchQuery = {
+  remoteOk?: boolean;
+  featured?: boolean;
+  jobTypes?: string[];
+};
+
+export const searchJobs = async (query: JobSearchQuery): Promise<JobData[]> => {
+  const strapiQuery: StrapiQuery = {
+    // populate: ['company', 'company.logo', 'company.coverImage', 'skillsTags'],
+    populate: ['company'],
+    filters: {},
+  };
+
+  // Add Boolean Query Filters
+  if (query?.remoteOk) strapiQuery.filters['remoteOk'] = { $eq: true };
+  if (query?.featured)
+    strapiQuery.filters['featured'] = { $eq: true };
+
+  // Add Inclusion Query Filters
+  strapiQuery.filters['jobType'] = { $in: query.jobTypes };
+
+  const strapiQueryStr = qs.stringify(strapiQuery, { encodeValuesOnly: true });
+  const res = await axios.get(`${apiUrl}/jobs?${strapiQueryStr}`);
+  const rawJobs = res.data.data;
+
+  return rawJobs;
+};
