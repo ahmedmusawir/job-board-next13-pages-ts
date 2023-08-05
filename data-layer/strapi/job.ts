@@ -1,6 +1,7 @@
 import axios from "../apiClient";
 import qs from "qs";
-import { ApiResponseJobSlugs, ApiResponseJobs, JobData } from "./job-entities";
+import { ApiResponseJobSlugs, ApiResponseJobs, JobData, JobSearchQuery } from "./job-entities";
+import { FormState } from "@/contexts/JobContext";
 // import { companyReducer } from './utils';
 
 const apiUrl = process.env.STRAPI_API_BASE_URL;
@@ -50,26 +51,27 @@ type StrapiQuery = {
   filters: { [key: string]: any };
 };
 
-type JobSearchQuery = {
-  remoteOk?: boolean;
-  featured?: boolean;
-  jobTypes?: string[];
-};
 
 export const searchJobs = async (query: JobSearchQuery): Promise<JobData[]> => {
   const strapiQuery: StrapiQuery = {
     // populate: ['company', 'company.logo', 'company.coverImage', 'skillsTags'],
-    populate: ['company'],
+    populate: ['company', 'skillTags'],
     filters: {},
   };
 
   // Add Boolean Query Filters
-  if (query?.remoteOk) strapiQuery.filters['remoteOk'] = { $eq: true };
-  if (query?.featured)
+  if (query.remoteOk) strapiQuery.filters['remoteOk'] = { $eq: true };
+  if (query.featured)
     strapiQuery.filters['featured'] = { $eq: true };
 
   // Add Inclusion Query Filters
   strapiQuery.filters['jobType'] = { $in: query.jobTypes };
+
+    // Add Range Query Filters
+    strapiQuery['filters']['annualSalary'] = {
+      $gte: query.minBaseSalary,
+      $lte: query.maxBaseSalary,
+    };
 
   const strapiQueryStr = qs.stringify(strapiQuery, { encodeValuesOnly: true });
   const res = await axios.get(`${apiUrl}/jobs?${strapiQueryStr}`);

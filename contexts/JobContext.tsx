@@ -1,3 +1,4 @@
+import datasource from '@/data-layer';
 import { Job, JobData } from '@/entities';
 import { useEffectAfterFirstRender } from '@/utils';
 import React, {
@@ -13,9 +14,14 @@ interface SidebarFormState {
   experienceLevels: string[];
   remoteOk: boolean;
   featured: boolean;
-  baseSalaryOptions: number[];
+  baseSalaryOptions: string[];
   baseSalaryBounds: number[];
   selectedTags: string[];
+}
+
+export interface FormState {
+  searchFormState: string;
+  sideBarFormState: SidebarFormState;
 }
 
 // Defining the shape of the context
@@ -54,19 +60,27 @@ export const JobProvider = ({
   // SEARCHBAR TEXT STATE
   const [searchFormState, setSearchFormState] = useState('');
 
-  const searchJobs = async (apiUrl: string, formsStates: any) => {
-    //... the searchJobs function
+  const findJobs = async (apiUrl: string, formsStates: any) => {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify(formsStates),
+    });
+    const foundJobs = await response.json();
+    console.log(foundJobs);
+    setDisplayedJobs(foundJobs);
   };
 
   //... useEffect calls
+
   // trigger a search whenever the sidebar form state changes
   useEffectAfterFirstRender(() => {
-    console.log(
-      'sidebar state form changed => sideBarFormState',
-      sideBarFormState
-    );
-    // const formsStates = { searchFormState, sideBarFormState };
-    // searchJobs('api/search-jobs', formsStates);
+    console.log('JobsContext: sideBarFormState', sideBarFormState);
+
+    const formsStates = { searchFormState, sideBarFormState };
+    findJobs('api/jobs-search', formsStates);
   }, [sideBarFormState]);
 
   // trigger a search whenever the search form state changes && length >= 3 -OR- length == 0 (implying a reset)

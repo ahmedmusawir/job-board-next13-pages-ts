@@ -2,6 +2,7 @@ import React from 'react';
 import SwitchButton from '../ui-ux/SwitchButton';
 import CheckboxGroupJobTypes from '../ui-ux/CheckboxGroupJobTypes';
 import CheckboxGroup from '../ui-ux/CheckboxGroup';
+import CheckboxGroupSalary from '../ui-ux/CheckboxGroupSalary';
 
 const SidebarForm = () => {
   return (
@@ -15,6 +16,10 @@ const SidebarForm = () => {
         Job Types
       </div>
       <CheckboxGroupJobTypes />
+      <div className="text-lg font-semibold leading-6 text-gray-400 py-5">
+        Salary Range
+      </div>
+      <CheckboxGroupSalary />
     </div>
   );
 };

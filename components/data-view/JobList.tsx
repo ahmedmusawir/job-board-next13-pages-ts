@@ -38,7 +38,7 @@ const JobList = ({ jobs }: JobData) => {
             <div className="-mt-px flex divide-x divide-gray-200">
               <div className="flex w-0 flex-1">
                 <h5 className="text-sm font-bold p-2">
-                  {/* Salary: ${job.attributes.annualSalary} */}
+                  Salary: ${job.attributes.annualSalary}
                 </h5>
               </div>
               <div className="-ml-px flex w-0 flex-1">
