@@ -82,8 +82,8 @@ export const JobProvider = ({
   useEffectAfterFirstRender(() => {
     if (searchFormState.length >= 3 || searchFormState.length == 0) {
       console.log('JobsContext: searchFormState', searchFormState);
-      const formsStates = { searchFormState, sideBarFormState };
-      findJobs('api/jobs-search', formsStates);
+      // const formsStates = { searchFormState, sideBarFormState };
+      // findJobs('api/jobs-search', formsStates);
     }
   }, [searchFormState]);
 

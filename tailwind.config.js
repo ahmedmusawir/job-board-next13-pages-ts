@@ -18,6 +18,7 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("@shrutibalasa/tailwind-grid-auto-fit"),
     require("daisyui"),
+    require('@tailwindcss/forms')
   ],
   daisyui: {
     themes: ["light", "dark"],

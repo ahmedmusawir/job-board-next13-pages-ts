@@ -74,52 +74,7 @@ export const searchJobs = async (query: JobSearchQuery): Promise<JobData[]> => {
     $lte: query.maxBaseSalary,
   };
 
-  // Add Full Text Search Query
-  type BasicFilter = {
-    $containsi?: string;
-    $eq?: boolean | string;
-    $in?: string[];
-    $gte?: number;
-    $lte?: number;
-  };
-
-  type SearchField = {
-  [key: string]: string | BasicFilter | NestedSearchField;
-};
-
-type NestedSearchField = {
-  [key: string]: BasicFilter;
-};
-
-  if (query.searchBarText) {
-    const searchFields = [
-      'title',
-      'jobCategory',
-      'jobType',
-      'jobDescription',
-      'aboutYou',
-      'jobResponsibilities',
-      'remunerationPackage',
-      'skillsTags.name',
-      'company.name',
-      'company.city',
-    ];
-
-    strapiQuery['filters']['$or'] = searchFields.map((field): SearchField => {
-      const searchField: SearchField = {};
-
-      if (!field.includes('.')) {
-        searchField[field] = { $containsi: query.searchBarText };
-      } else {
-        const [level1, level2] = field.split('.');
-        const nestedSearchField: NestedSearchField = {};
-        nestedSearchField[level2] = { $containsi: query.searchBarText };
-        searchField[level1] = nestedSearchField;
-      }
-      return searchField;
-    });
-  }
-
+  
   const strapiQueryStr = qs.stringify(strapiQuery, { encodeValuesOnly: true });
   const res = await axios.get(`${apiUrl}/jobs?${strapiQueryStr}`);
   const rawJobs = res.data.data;

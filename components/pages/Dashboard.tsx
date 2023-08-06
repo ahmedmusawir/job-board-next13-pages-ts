@@ -6,6 +6,7 @@ import JobList from '../data-view/JobList';
 import Sidebar from '../ui-ux/Sidebar';
 
 import { JobProvider, useJobs } from '../../contexts/JobContext';
+import SearchForm from '../forms/SearchForm';
 
 export default function Dashboard() {
   const jobsData = db.data;
@@ -38,6 +39,9 @@ const DashboardContent = () => {
       </Box>
       {/* JOB LIST - RIGHT BLOCK */}
       <Box className="min-w-[70%]">
+        <Row>
+          <SearchForm />
+        </Row>
         <Row className="bg-gray-200">
           <h2 className="text-lg font-bold mb-5">Current Jobs</h2>
           <JobList jobs={jobs} />

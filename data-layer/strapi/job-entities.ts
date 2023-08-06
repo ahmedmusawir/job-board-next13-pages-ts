@@ -1,4 +1,3 @@
-import { FormState } from "@/contexts/JobContext";
 
 export interface JobSearchQuery  {
   remoteOk?: boolean;
